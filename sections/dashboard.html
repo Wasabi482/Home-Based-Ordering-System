@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles/ham.css">
+  <link rel="stylesheet" href="../styles/dashboard.css">
+</head>
+<body>
+
+   <!-- Sidebar dynamically loaded here -->
+   <div id="sidebar-container"></div> 
+
+   <h2>Dashboard</h2>
+   <p>Overview of sales, recent orders, analytics, promos, and discounts.</p>
+    
+   <div class="dashboard">
+     <div class="card overview-card">
+       <div class="stat" id="total-orders"></div>
+       <div class="stat" id="pending-orders"></div>
+       <div class="stat" id="completed-orders"></div>
+       <div class="stat" id="total-revenue"></div>
+     </div>
+
+     <div class="card recent-orders">
+       <h3>Recent Orders</h3>
+       <table>
+         <tbody>
+         </tbody>
+       </table>
+     </div>
+
+
+
+     <div class="card promos">
+       <h3>Current Promotions</h3>
+       <ul>
+         <li><strong>Buy 1 Get 1 Free</strong> - Applies to all espresso drinks.</li>
+         <li><strong>10% Off</strong> - For customers who order online.</li>
+         <li><strong>Happy Hour (2PM - 5PM)</strong> - 20% off on iced coffees.</li>
+       </ul>
+     </div>
+
+     <div class="card reports">
+       <h3>Sales Report</h3>
+       <canvas id="salesChart"></canvas>
+     </div>
+
+     <div class="card quick-actions">
+       <h3>Quick Actions</h3>
+       <button>Add New Product</button>
+       <button>Manage Orders</button>
+     </div>
+   </div>
+ </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../Scripts/completed-orders.js"></script>
+  <script src="../Scripts/pending-orders.js"></script>
+   <script src="../Scripts/dashboard.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch the sidebar HTML
+      fetch("../pages/ham.html")
+        .then(response => response.text())
+        .then(data => {
+          // Insert the sidebar HTML into the container
+          document.getElementById("sidebar-container").innerHTML = data;
+
+          // Dynamically load the ham.js script after the sidebar is inserted
+          const sidebarScript = document.createElement("script");
+          sidebarScript.src = "../scripts/ham.js";
+          sidebarScript.onload = () => console.log("ham.js loaded successfully");
+          document.body.appendChild(sidebarScript);
+        })
+        .catch(error => console.error("❌ Failed to load sidebar:", error));
+    });
+  </script>
+</body>
+</html>

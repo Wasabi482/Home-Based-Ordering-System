@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/sections.css">
+    <link rel="stylesheet" href="../styles/products.css">
+    <link rel="stylesheet" href="../styles/ham.css">
+
+</head>
+<body>
+
+    <h2>Products</h2>
+    <p>Manage your product listings, prices, and stock availability.</p>
+
+    <button class="add-btn" onclick="openAddModal()">+ Add Item</button>
+    <div class="products-container" id="productsContainer"></div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Product</h3>
+            <input type="file" id="editImage" accept="image/*">
+            <input type="text" id="editName" placeholder="Product Name">
+            <input type="number" id="editPrice" placeholder="Price">
+            <input type="text" id="editCategory" placeholder="Category">
+            <textarea id="editDescription" placeholder="Description"></textarea>
+            <button onclick="saveChanges()">Update</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+          <h3>Add Product</h3>
+          <input type="file" id="addImage" accept="image/*">
+          <input type="text" id="addName" placeholder="Product Name">
+          <input type="number" id="addPrice" placeholder="Price">
+          <input type="text" id="addCategory" placeholder="Category">
+          <textarea id="addDescription" placeholder="Description"></textarea>
+          <button onclick="addProduct()">Add</button>
+          <button onclick="closeModal()">Cancel</button>
+      </div>
+  </div>
+
+
+  <!-- Sidebar will be loaded here dynamically -->
+  <div id="sidebar-container"></div>
+
+    <script>console.log("products.html loaded");</script>
+    <script src="../data/menu.js"></script>
+    <script src="../Scripts/products.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          // Fetch the sidebar HTML
+          fetch("../pages/ham.html")
+            .then(response => response.text())
+            .then(data => {
+              // Insert the sidebar HTML into the container
+              document.getElementById("sidebar-container").innerHTML = data;
+    
+              // Dynamically load the ham.js script after the sidebar is inserted
+              const sidebarScript = document.createElement("script");
+              sidebarScript.src = "../scripts/ham.js";
+              sidebarScript.onload = () => console.log("ham.js loaded successfully");
+              document.body.appendChild(sidebarScript);
+            })
+            .catch(error => console.error("❌ Failed to load sidebar:", error));
+        });
+      </script>
+</body>
+</html>

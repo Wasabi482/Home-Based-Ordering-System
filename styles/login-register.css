@@ -1,0 +1,120 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Container Layout */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Left Image Section */
+.image-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Ensures the image doesn't exceed the container */
+}
+
+.image-section img {
+  
+  width: 100%;  /* Make the image take full width of the container */
+  height: 100vh; /* Match the full height of the viewport */
+  object-fit: cover; /* Ensures the image covers the section */
+}
+
+/* Right Form Section */
+.form-section {
+  flex: 1;
+  background-color: white; /* Light Beige Background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.form-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form Styling */
+form {
+  width: 100%;
+  max-width: 350px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.checkbox input {
+  margin-right: 8px;
+}
+
+/* Button */
+button {
+  width: 100%;
+  background-color: brown;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: burlywood;
+}
+
+/* Sign-in Link */
+p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;  
+}
+
+p a {
+  color: #FF6600;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+  }
+
+  .image-section {
+      height: 250px;
+      padding: 10px;
+  }
+
+  .image-section img {
+      max-width: 60%;
+  }
+}

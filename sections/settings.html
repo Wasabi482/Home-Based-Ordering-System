@@ -1,0 +1,38 @@
+s
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/ham.css">
+    <link rel="stylesheet" href="../styles/sections.css">
+  </head>
+  <body>
+    <div id="sidebar-container"></div> 
+<div>
+  <h2>Settings</h2>
+  <p>Change business details, payment methods, and notifications.</p>
+</div>
+<script src="../Scripts/dashboard.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch the sidebar HTML
+      fetch("../pages/ham.html")
+        .then(response => response.text())
+        .then(data => {
+          // Insert the sidebar HTML into the container
+          document.getElementById("sidebar-container").innerHTML = data;
+
+          // Dynamically load the ham.js script after the sidebar is inserted
+          const sidebarScript = document.createElement("script");
+          sidebarScript.src = "../scripts/ham.js";
+          sidebarScript.onload = () => console.log("ham.js loaded successfully");
+          document.body.appendChild(sidebarScript);
+        })
+        .catch(error => console.error("❌ Failed to load sidebar:", error));
+    });
+  </script>
+  </body>
+  </html>

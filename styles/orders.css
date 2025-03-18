@@ -1,0 +1,202 @@
+body {
+  background-color: #f7f1e3;
+  color: #5a3e36;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+h1, h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Pending Orders Grid */
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1500px;
+}
+
+.order-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 300px; /* Allow card to shrink dynamically */
+  padding: 10px; /* Reduce padding for a more compact look */
+}
+
+.order-card .content{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px; /* Reduced padding */
+  text-align: center; 
+}
+
+.order-card h3 {
+  margin: 0;
+  color: #444;
+}
+
+.order-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.order-card .btn-container {
+  margin-top: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px; /* Reduced padding */
+}
+
+.buttons button {
+  padding: 6px 10px; /* Made buttons smaller */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+  font-size: 14px;
+}
+
+.done-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.void-btn, .delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+.edit-btn, .view-btn {
+  background-color: #ffcc00;
+  color: white;
+}
+
+.done-btn:hover {
+  opacity: 0.8;
+}
+
+.void-btn:hover {
+  opacity: 0.8;
+}
+.edit-btn:hover {
+  opacity: 0.8;
+}
+
+.complete-orders{
+  max-width: 1200px;
+  width: 100%;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(1200px, 1fr));
+  gap: 20px;
+  align-items: start;
+  visibility: visible !important;
+  margin-top: 100px;
+}
+
+/* Completed Orders Table */
+.card{
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+
+.table-container {
+  overflow-x: auto;
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.actions button{
+  padding: 6px 10px; /* Made buttons smaller */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+  font-size: 14px;
+}
+
+.export{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #2ecc71;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+
+/* Modal Styling */
+.modal {
+  border:solid red;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.close-modal {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
