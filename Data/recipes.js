@@ -1,6 +1,7 @@
 const recipes = JSON.parse(localStorage.getItem("recipes")) || {
 
   //coffeebeans, sugar, chocolateSyrupsyrup
+  //the servings are per 12oz
   drinks: 
   {
     Espresso: 
@@ -45,6 +46,7 @@ const recipes = JSON.parse(localStorage.getItem("recipes")) || {
     }
   },
   foods: 
+  //the servings are per piece 
   {
     Croissant: 
     { 
