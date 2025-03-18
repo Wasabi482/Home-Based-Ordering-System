@@ -1,47 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../styles/orders.css">
+  <link rel="stylesheet" href="../styles/ham.css">
+  <link rel="stylesheet" href="../styles/sections.css">
+</head>
+<body>
+  <div id="sidebar-container"></div> 
+  <h1>Orders</h1>
+  
+  <button id="export-excel" class="export">Export to Excel</button>
 
+  <!-- Pending Orders Section -->
+  <section id="pending-orders-section">
+      <h2>Pending Orders</h2>
+      <div id="pending-orders-grid" class="orders-grid"></div>
+  </section>
 
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/orders.css">
-    <link rel="stylesheet" href="../styles/ham.css">
-    <link rel="stylesheet" href="../styles/sections.css">
-  </head>
-  <body>
-    <div id="sidebar-container"></div> 
-      <h1>Orders</h1>
-      
-      <button id="export-excel" class="export">Export to Excel</button>
-
-      <!-- Pending Orders Section -->
-      <section id="pending-orders-section">
-          <h2>Pending Orders</h2>
-          <div id="pending-orders-grid" class="orders-grid"></div>
-      </section>
-
-      <!-- Completed Orders Section -->
-      <section id="completed-orders-section" class="complete-orders">
-          <h2>Completed Orders</h2>
-          <div class="card">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Total</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="completed-orders-table"></tbody>
-            </table>
-          </div>
-      </section>
-
+  <!-- Completed Orders Section -->
+  <section id="completed-orders-section" class="complete-orders">
+      <h2>Completed Orders</h2>
+      <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="completed-orders-table"></tbody>
+        </table>
+      </div>
+  </section>
 
   <!-- Order Details Modal -->
   <div id="order-modal" class="modal">
@@ -51,26 +48,21 @@
           <div id="order-details"></div>
       </div>
   </div>
-    <script src="../Data/pendings-orders.js"></script>
-    <script src="../Data/completed-orders.js"></script>
-    <script src="../Scripts/orders.js"></script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          // Fetch the sidebar HTML
-          fetch("../pages/ham.html")
-            .then(response => response.text())
-            .then(data => {
-              // Insert the sidebar HTML into the container
-              document.getElementById("sidebar-container").innerHTML = data;
-    
-              // Dynamically load the ham.js script after the sidebar is inserted
-              const sidebarScript = document.createElement("script");
-              sidebarScript.src = "../scripts/ham.js";
-              sidebarScript.onload = () => console.log("ham.js loaded successfully");
-              document.body.appendChild(sidebarScript);
-            })
-            .catch(error => console.error("❌ Failed to load sidebar:", error));
-        });
-      </script>
-  </body>
-  </html>
+
+  <script src="../scripts/orders.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("../pages/ham.html")
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("sidebar-container").innerHTML = data;
+          const sidebarScript = document.createElement("script");
+          sidebarScript.src = "../scripts/ham.js";
+          sidebarScript.onload = () => console.log("ham.js loaded successfully");
+          document.body.appendChild(sidebarScript);
+        })
+        .catch(error => console.error("❌ Failed to load sidebar:", error));
+    });
+  </script>
+</body>
+</html>

@@ -1,5 +1,4 @@
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -7,15 +6,65 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/ham.css">
+    <link rel="stylesheet" href="../styles/inventory.css">
     <link rel="stylesheet" href="../styles/sections.css">
   </head>
   <body>
     <div id="sidebar-container"></div> 
-<div>
   <h2>Inventory</h2>
   <p>Track stock levels for coffee beans, milk, sugar, etc.</p>
+  
+
+  <button class="addItem" id="addItem">+ Add Item</button>
+
+  <section class="container">
+    <div class="card">
+      <table class="inventory-table">
+          <thead>
+              <tr>
+                  <th>Item</th>
+                  <th>Stock</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody id="inventory-body">
+              <!-- Inventory items will be populated here dynamically -->
+          </tbody>
+      </table>
+   </div>
+  </section>
+    
+
+<!-- Edit Modal -->
+  <div id="editModal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h3>Edit Inventory</h3>
+          <p id="edit-item-name"></p>
+          <form id="edit-form">
+              <label for="edit-stock">New Quantity:</label>
+              <input type="number" class="edit-input" id="edit-stock" min="0" required>
+              <button type="submit" class="save-btn">Save</button>
+          </form>
+      </div>
+  </div>
+
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+        <h3>Add Item</h3>
+        <input type="text" id="addName" placeholder="Item Name">
+        <input type="number" id="addQuantity" placeholder="Quantity">
+        <input type="text" id="addUnit" placeholder="Unit">
+        <button class="add-btn">Add</button>
+        <button class="cancel-btn">Cancel</button>
+    </div>
 </div>
-<script src="../Scripts/dashboard.js"></script>
+
+<script src="../Data/pendings-orders.js"></script>
+<script src="../Data/completed-orders.js"></script>
+<script src="../Data/inventory.js"></script>
+<script src="../Scripts/inventory.js"></script>
+</body>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // Fetch the sidebar HTML

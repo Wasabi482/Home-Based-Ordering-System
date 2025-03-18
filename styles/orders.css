@@ -110,6 +110,10 @@ h1, h2 {
   margin-top: 100px;
 }
 
+.complete-orders tr:hover{
+  background-color: #f1f1f1;
+}
+
 /* Completed Orders Table */
 .card{
   background: white;
@@ -128,6 +132,8 @@ h1, h2 {
   overflow-x: auto;
   padding: 20px;
 }
+
+
 
 table {
   width: 100%;
@@ -166,7 +172,7 @@ table th {
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer;  
 }
 
 
@@ -198,5 +204,9 @@ table th {
   float: right;
   font-size: 24px;
   cursor: pointer;
+}
+
+.close-modal:hover{
+  color: black;
 }
 

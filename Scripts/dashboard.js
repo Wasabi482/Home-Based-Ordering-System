@@ -1,97 +1,97 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Fetch order data
-  let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
-  let completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [];
+    const totalOrdersEl = document.getElementById("total-orders");
+    const pendingOrdersEl = document.getElementById("pending-orders");
+    const completedOrdersEl = document.getElementById("completed-orders");
+    const totalRevenueEl = document.getElementById("total-revenue");
+    const recentOrdersTable = document.querySelector(".recent-orders tbody");
+    const quickActionsContainer = document.querySelector(".quick-actions");
 
-  console.log(pendingOrders);
-  console.log(completedOrders);
+    let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
+    let completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [];
 
-  // Get today's date in YYYY-MM-DD format
-  const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("T")[0];
+    const totalOrdersToday = completedOrders.filter(order => order.date === today).length;
+    const totalPendingOrders = pendingOrders.length;
+    const totalCompletedOrders = completedOrders.length;
+    const totalRevenueToday = completedOrders.filter(order => order.date === today)
+        .reduce((sum, order) => sum + order.total, 0);
 
-  // Calculate Total Orders (Completed Today)
-  const totalOrdersToday = completedOrders.filter(order => order.date === today).length;
+    function updateDashboard() {
+        totalOrdersEl.innerHTML = `Total Orders: <p>${totalOrdersToday}</p>`;
+        pendingOrdersEl.innerHTML = `Pending Orders: <p>${totalPendingOrders}</p>`;
+        completedOrdersEl.innerHTML = `Completed Orders: <p>${totalCompletedOrders}</p>`;
+        totalRevenueEl.innerHTML = `Total Revenue: <p>$${totalRevenueToday.toFixed(2)}</p>`;
 
-  // Calculate Pending Orders
-  const totalPendingOrders = pendingOrders.length;
+        recentOrdersTable.innerHTML = completedOrders.slice(-5).reverse().map(order => `
+            <tr>
+                <td>#${order.orderId}</td>
+                <td>${order.customer}</td>
+                <td class="completed">Completed</td>
+                <td>$${order.total.toFixed(2)}</td>
+            </tr>`).join("");
+    }
 
-  // Calculate Completed Orders (Completed Today)
-  const totalCompletedOrders = completedOrders.length;
+    function generateSalesChart() {
+        const dailySales = {};
+        const last7Days = [];
+        for (let i = 6; i >= 0; i--) {
+            let date = new Date();
+            date.setDate(date.getDate() - i);
+            let formattedDate = date.toISOString().split("T")[0];
+            last7Days.push(formattedDate);
+            dailySales[formattedDate] = 0;
+        }
 
-  // Calculate Total Revenue (Sum of completed orders for today)
-  const totalRevenueToday = completedOrders
-      .filter(order => order.date === today)
-      .reduce((sum, order) => sum + order.total, 0);
+        completedOrders.forEach(order => {
+            if (dailySales.hasOwnProperty(order.date)) {
+                dailySales[order.date] += order.total;
+            }
+        });
 
-  // Display Dashboard Data
-  document.getElementById("total-orders").innerHTML = `Total Orders: <p>${totalOrdersToday}</p>`;
-  document.getElementById("pending-orders").innerHTML = `Pending Orders: <p>${totalPendingOrders}</p>`;
-  document.getElementById("completed-orders").innerHTML = `Completed Orders: <p>${totalCompletedOrders}</p>`;
-  document.getElementById("total-revenue").innerHTML = `Total Revenue: <p>$${totalRevenueToday.toFixed(2)}</p>`;
+        const ctx = document.getElementById("salesChart").getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: last7Days,
+                datasets: [{
+                    label: "Daily Sales ($)",
+                    data: last7Days.map(date => dailySales[date] || 0),
+                    backgroundColor: "rgba(108, 92, 231, 0.6)",
+                    borderColor: "#6c5ce7",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 
-  // Display Recent Orders (Last 5 completed orders)
-  const recentOrdersTable = document.querySelector(".recent-orders tbody");
-  recentOrdersTable.innerHTML = ""; // Clear existing rows
-  completedOrders.slice(-5).reverse().forEach(order => {
-      const row = `<tr>
-          <td>#${order.orderId}</td>
-          <td>${order.customer}</td>
-          <td class="completed">Completed</td>
-          <td>$${order.total.toFixed(2)}</td>
-      </tr>`;
-      recentOrdersTable.innerHTML += row;
-  });
+    function updateCardStyles() {
+        totalOrdersEl.style.backgroundColor = "#5a3e36";
+        pendingOrdersEl.style.backgroundColor = "#e67e22";
+        completedOrdersEl.style.backgroundColor = "#27ae60";
+        totalRevenueEl.style.backgroundColor = "#2c3e50";
+    }
 
-  // Generate Daily Sales Data for Chart.js (Last 7 Days)
-  const dailySales = {};
-  const last7Days = [];
-  for (let i = 6; i >= 0; i--) {
-      let date = new Date();
-      date.setDate(date.getDate() - i);
-      let formattedDate = date.toISOString().split("T")[0];
-      last7Days.push(formattedDate);
-      dailySales[formattedDate] = 0; // Initialize to 0
-  }
+    quickActionsContainer.addEventListener("click", function (event) {
+        if (event.target.tagName === "BUTTON") {
+            const action = event.target.textContent;
+            if (action.includes("Add New Product")) {
+                console.log("🆕 Add New Product Clicked");
+            } else if (action.includes("Manage Orders")) {
+                console.log("📋 Manage Orders Clicked");
+            }
+        }
+    });
 
-  completedOrders.forEach(order => {
-      if (dailySales.hasOwnProperty(order.date)) {
-          dailySales[order.date] += order.total;
-      }
-  });
-
-  // Update Sales Chart
-  const ctx = document.getElementById("salesChart").getContext("2d");
-  new Chart(ctx, {
-      type: "bar", // Use bar chart for better readability
-      data: {
-          labels: last7Days,
-          datasets: [{
-              label: "Daily Sales ($)",
-              data: last7Days.map(date => dailySales[date] || 0), // Ensure every day has a value
-              backgroundColor: "rgba(108, 92, 231, 0.6)",
-              borderColor: "#6c5ce7",
-              borderWidth: 1
-          }]
-      },
-      options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
-      }
-  });
-
-  function updateCardStyles() {
-      console.log("✅ Updating overview card colors...");
-
-      document.getElementById("total-orders").style.backgroundColor = "#5a3e36";
-      document.getElementById("pending-orders").style.backgroundColor = "#e67e22";
-      document.getElementById("completed-orders").style.backgroundColor = "#27ae60";
-      document.getElementById("total-revenue").style.backgroundColor = "#2c3e50";
-  }
-
-  updateCardStyles();
+    updateDashboard();
+    generateSalesChart();
+    updateCardStyles();
 });

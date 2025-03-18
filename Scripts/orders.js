@@ -10,18 +10,13 @@
     let completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [];
 
     function saveOrders() {
-    
         localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
         localStorage.setItem("completedOrders", JSON.stringify(completedOrders));
-
     }
 
     function renderPendingOrders() {
-        pendingOrdersContainer.innerHTML = "";
-        pendingOrders.forEach((order, index) => {
-            const orderCard = document.createElement("div");
-            orderCard.classList.add("order-card");
-            orderCard.innerHTML = `
+        pendingOrdersContainer.innerHTML = pendingOrders.map((order, index) => `
+          <div class="order-card">
               <div class="content">
                   <h3>${order.orderId}</h3>
                   <p><strong>Customer:</strong> ${order.customer}</p>
@@ -33,16 +28,12 @@
                       <button class="void-btn" data-index="${index}">Void</button>
                   </div>
               </div>
-            `;
-            pendingOrdersContainer.appendChild(orderCard);
-        });
+          </div>`).join("");
     }
 
     function renderCompletedOrders() {
-        completedOrdersTable.innerHTML = "";
-        completedOrders.forEach((order, index) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
+        completedOrdersTable.innerHTML = completedOrders.map((order, index) => `
+            <tr>
                 <td>${order.orderId}</td>
                 <td>${order.customer}</td>
                 <td>$${order.total.toFixed(2)}</td>
@@ -53,33 +44,25 @@
                     <button class="delete-btn" data-index="${index}">Delete</button>
                   </div>
                 </td>
-            `;
-            completedOrdersTable.appendChild(row);
-        });
+            </tr>`).join("");
     }
 
     pendingOrdersContainer.addEventListener("click", (e) => {
+        const index = e.target.dataset.index;
         if (e.target.classList.contains("done-btn")) {
-            const index = e.target.dataset.index;
-            const completedOrder = { ...pendingOrders[index], date: new Date().toISOString().split("T")[0] };
-
-            completedOrders.unshift(completedOrder);
+            completedOrders.unshift({ ...pendingOrders[index], date: new Date().toISOString().split("T")[0] });
             pendingOrders.splice(index, 1);
-
-            saveOrders();
-            renderPendingOrders();
-            renderCompletedOrders();
         } else if (e.target.classList.contains("void-btn")) {
-            const index = e.target.dataset.index;
             pendingOrders.splice(index, 1);
-            saveOrders();
-            renderPendingOrders();
         }
+        saveOrders();
+        renderPendingOrders();
+        renderCompletedOrders();
     });
 
     completedOrdersTable.addEventListener("click", (e) => {
+        const index = e.target.dataset.index;
         if (e.target.classList.contains("view-btn")) {
-            const index = e.target.dataset.index;
             const order = completedOrders[index];
             orderDetails.innerHTML = `
                 <h3>${order.orderId}</h3>
@@ -90,7 +73,6 @@
             `;
             orderModal.style.display = "block";
         } else if (e.target.classList.contains("delete-btn")) {
-            const index = e.target.dataset.index;
             completedOrders.splice(index, 1);
             saveOrders();
             renderCompletedOrders();
@@ -108,7 +90,7 @@
     });
 
     exportButton.addEventListener("click", () => {
-        let csvContent = "Order ID,Customer,Total,Date\n" + completedOrders.map(order => `${order.orderId},${order.customer},${order.total.toFixed(2)},${order.date}`).join("\n");
+        const csvContent = "Order ID,Customer,Total,Date\n" + completedOrders.map(order => `${order.orderId},${order.customer},${order.total.toFixed(2)},${order.date}`).join("\n");
         const blob = new Blob([csvContent], { type: "text/csv" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
