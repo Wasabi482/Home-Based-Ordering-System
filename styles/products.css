@@ -76,11 +76,11 @@ body {
 
 .edit-btn {
   background: #ffcc00;
-}
-
-.delete-btn {
-  background: #e74c3c;
   color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .add-btn {
@@ -95,7 +95,6 @@ body {
 }
 
 .modal {
-  border:solid red;
   display: none;
   position: fixed;
   z-index: 1;
@@ -123,4 +122,22 @@ body {
 
 .modal button {
   margin-top: 10px;
+}
+
+#saveChangesBtn, #addProductBtn{
+  background: #2ecc71;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+#cancelEditBtn, #cancelAddBtn, .delete-btn{
+  background: #e74c3c;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
