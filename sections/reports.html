@@ -7,16 +7,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/reports.css">
     <link rel="stylesheet" href="../styles/ham.css">
-    <link rel="stylesheet" href="../styles/sections.css">
   </head>
   <body>
-    <div>
-      <div id="sidebar-container"></div> 
-      <h2>Reports</h2>
-      <p> View sales reports, revenue, and order trends.</p>
+    <div id="sidebar-container"></div> 
+  <h2>Reports</h2>
+  <p>View sales reports, revenue, and order trends.</p>
+
+  <div class="reports">
+    <div class="card chart">
+      <h3>Sales Report</h3>
+        <div class="input">
+        <label>From: <input type="date" id="from-date"></label>
+        <label>To: <input type="date" id="to-date"></label>
+        <button id="generate-sales" class="btn">Generate</button>
+      </div>
+      <canvas id="salesChart"></canvas>
     </div>
-    <script src="../Scripts/dashboard.js"></script>
+
+    <div class="card warning">
+      <h3>Inventory reports</h3>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+      <p>This is for the inventory reports</p>
+    </div>
+
+    <div class="card trending">
+      <h3>Trending Products</h3>
+        <div class="input">
+        <label>From: <input type="date" id="trend-from-date"></label>
+        <label>To: <input type="date" id="trend-to-date"></label>
+        <button id="generate-trend" class="btn">Generate</button>
+      </div>
+      <canvas id="trendChart"></canvas>
+    </div>
+
+    <div class="card revenue">
+      <h3>Total Revenue</h3>
+      <div class="rev">
+        <label>From: <input type="date" id="revenue-from-date"></label>
+        <label>To: <input type="date" id="revenue-to-date"></label>
+        <button id="generate-revenue" class="btn">Generate</button>
+      </div>
+      <p id="total-revenue">₱0</p>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../Data/completed-orders.js"></script>
+  <script src="../Data/pendings-orders.js"></script>
+    <script src="../Scripts/reports.js"></script>
       <script>
         document.addEventListener("DOMContentLoaded", function () {
           // Fetch the sidebar HTML

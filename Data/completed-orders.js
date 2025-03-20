@@ -5,7 +5,7 @@ const completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [
     total: 12.00, 
     date: "2025-03-01",
     items: [
-      { id: "m5", name: "Mocha", price: 5.50, quantity: 2 }
+      { id: "m5", name: "Mocha", price: 5.50, quantity: 100 }
     ]
   },
   { 
@@ -54,7 +54,7 @@ const completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [
     date: "2025-03-03",
     items: [
       { id: "m1", name: "Espresso", price: 3.50, quantity: 1 },
-      { id: "m10", name: "Chocolate Chip Cookie", price: 2.00, quantity: 2 }
+      { id: "m10", name: "Chocolate Chip Cookie", price: 2.00, quantity: 50 }
     ]
   },
   { 
@@ -93,7 +93,18 @@ const completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [
       { id: "m4", name: "Iced Coffee", price: 4.00, quantity: 1 },
       { id: "m8", name: "Blueberry Muffin", price: 3.00, quantity: 2 }
     ]
-  }
+  },
+  { 
+    orderId: "#00111", 
+    customer: "Jack Cyan", 
+    total: 10.75, 
+    date: "2025-02-05",
+    items: [
+      { id: "m4", name: "Iced Coffee", price: 4.00, quantity: 1 },
+      { id: "m8", name: "Blueberry Muffin", price: 3.00, quantity: 2 }
+    ]
+  },
+
 ];
 
 if (!localStorage.getItem("completedOrders")) {
