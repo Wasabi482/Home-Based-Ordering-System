@@ -38,10 +38,6 @@ body {
   min-height: 100px !important;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
-
 .overview-card {
   grid-column: span 3;
   display: flex;
@@ -83,6 +79,11 @@ body {
 
 .reports{
   grid-column: span 2;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  height: 350px;
+  justify-content: space-between;
 }
 .reports canvas {
   width: 100% !important;
@@ -91,17 +92,64 @@ body {
   background-color: white !important;
 }
 
-.quick-actions button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+.btn{
+  background:#2ecc71;
+  color: white;
+  padding: 6px 10px; /* Made buttons smaller */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+  font-size: 14px;
+  border: none;
 }
 
-.quick-actions button:nth-child(1) { background: #2ecc71; color: white; }
-.quick-actions button:nth-child(2) { background: #e74c3c; color: white; }
+
+#generate-sales{
+  background:#2ecc71;
+  color: white;
+  padding: 6px 10px; /* Made buttons smaller */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+  margin-top: 10px;
+  font-size: 14px;
+  border: none;
+}
+
+.promos{
+  grid-row: span 2;
+}
+
+.input-promo{
+  margin-left: -40px;
+  overflow-y: scroll;
+  margin-left: -40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 0;
+}
+
+.promo-input{
+  display: flex;
+  flex-direction: column;
+}
+.promo-input textarea{
+  margin: 5px 0;
+  padding: 8px;
+  width: 90%;
+}
+.delete-promo{
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  margin-top: 10px;
+
+}
+
+
 
 @media (max-width: 768px) {
   .dashboard {

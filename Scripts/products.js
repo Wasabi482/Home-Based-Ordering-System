@@ -11,26 +11,61 @@ document.addEventListener("DOMContentLoaded", function () {
     let menu = JSON.parse(localStorage.getItem("menu")) || [];
     let currentEditIndex = null;
 
+    let recipes = JSON.parse(localStorage.getItem("recipes")) || {};
+    console.log(recipes);
     function saveToLocalStorage() {
         localStorage.setItem("menu", JSON.stringify(menu));
     }
 
     function displayProducts() {
-        productContainer.innerHTML = menu.map((item, index) => `
+        productsContainer.innerHTML = menu.map(product => `
             <div class="product-card">
-                <img src="${item.image}" alt="${item.name}">
-                <div class="content">
-                    <h3>${item.name}</h3>
-                    <p>${item.category}</p>
-                    <p>₱${item.price.toFixed(2)}</p>
-                    <p>${item.description}</p>
-                    <div class="buttons">
-                        <button class="edit-btn" data-index="${index}">Edit</button>
-                        <button class="delete-btn" data-index="${index}">Delete</button>
-                    </div>
-                </div>
-            </div>`).join("");
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <p>$${product.price.toFixed(2)}</p>
+                <button class="edit-btn" data-id="${product.id}">Edit</button>
+                <button class="delete-btn" data-id="${product.id}">Delete</button>
+                <button class="view-recipe-btn" data-id="${product.id}">View Recipe</button>
+            </div>
+        `).join("");
     }
+
+    function getRecipeById(productId) {
+        const product = menu.find(item => item.id === productId);
+        if (!product) return null;
+    
+        const productName = product.name.trim(); // Normalize name
+    
+        const recipe =
+            recipes.drinks.find(drink => drink.name === productName)?.ingredients ||
+            recipes.foods.find(food => food.name === productName)?.ingredients ||
+            null;
+    
+        if (!recipe) {
+            console.warn(`Recipe not found for: ${productName}`);
+        }
+    
+        return recipe;
+    }
+    function showRecipeModal(productId) {
+        const recipeModal = document.getElementById("recipeModal");
+        const recipeDetails = document.getElementById("recipeDetails");
+        console.log(menu);
+        const recipe = getRecipeById(productId);
+        
+        if (!recipe) {
+            recipeDetails.innerHTML = "<p>No recipe available for this product.</p>";
+        } else {
+            recipeDetails.innerHTML = Object.entries(recipe).map(([ingredient, amount]) => `
+                <p>${ingredient}: ${amount}g</p>
+            `).join(" ");
+        }
+        
+        recipeModal.style.display = "block";
+    }
+
+
 
     function openEditModal(index) {
         currentEditIndex = index;
@@ -109,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
     cancelAddBtn.addEventListener("click", closeModal);
     saveChangesBtn.addEventListener("click", saveChanges);
     cancelEditBtn.addEventListener("click", closeModal);
+    cancelViewBtn.addEventListener("click", closeModal);
 
     // Product Edit/Delete Delegation
     productContainer.addEventListener("click", (e) => {
@@ -117,7 +153,19 @@ document.addEventListener("DOMContentLoaded", function () {
             openEditModal(index);
         } else if (e.target.classList.contains("delete-btn")) {
             deleteProduct(index);
+        } else if (e.target.classList.contains("view-recipe-btn")){
+            const productId = e.target.dataset.id;
+            showRecipeModal(productId);
         }
+    });
+
+    document.getElementById("saveRecipeChangesBtn").addEventListener("click", function () {
+        const productId = document.querySelector(".view-recipe-btn").dataset.id;
+        saveRecipeChanges(productId);
+    });
+
+    document.getElementById("cancelRecipeEditBtn").addEventListener("click", function () {
+        document.getElementById("recipeModal").style.display = "none";
     });
 
     displayProducts();

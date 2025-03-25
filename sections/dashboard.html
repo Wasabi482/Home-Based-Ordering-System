@@ -35,27 +35,29 @@
 
 
      <div class="card promos">
-       <h3>Current Promotions</h3>
-       <ul>
-         <li><strong>Buy 1 Get 1 Free</strong> - Applies to all espresso drinks.</li>
-         <li><strong>10% Off</strong> - For customers who order online.</li>
-         <li><strong>Happy Hour (2PM - 5PM)</strong> - 20% off on iced coffees.</li>
-       </ul>
-     </div>
+      <h3>Current Promotions</h3>
+      <ul id="promo-list"></ul>
+      <div class="promo-input">
+        <textarea id="promo-title" placeholder="Promo Title"></textarea>
+        <textarea id="promo-description" placeholder="Promo Description"></textarea>
+      </div>
+      <button id="add-promo" class="btn">Add Promo</button>
+    </div>
 
      <div class="card reports">
-       <h3>Sales Report</h3>
-       <canvas id="salesChart"></canvas>
-     </div>
-
-     <div class="card quick-actions">
-       <h3>Quick Actions</h3>
-       <button>Add New Product</button>
-       <button>Manage Orders</button>
-     </div>
+      <h3>Sales Report</h3>
+        <div class="input">
+        <label>From: <input type="date" id="from-date"></label>
+        <label>To: <input type="date" id="to-date"></label>
+        <button id="generate-sales">Generate</button>
+      </div>
+      <canvas id="salesChart"></canvas>
+    </div>
    </div>
  </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../Data/recipes.js"></script>
+  <script src="../Data/promotions.js"></script>
   <script src="../Data/completed-orders.js"></script>
   <script src="../Data/pendings-orders.js"></script>
    <script src="../Scripts/dashboard.js"></script>

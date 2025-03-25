@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="../styles/ham.css">
-  <link rel="stylesheet" href="../styles/sections.css">
-  <title>Document</title>
+  <link rel="stylesheet" href="../styles/users.css">
+  <title>User Management</title>
 </head>
 <body>
   <div>
@@ -14,24 +14,62 @@
     <h2>User Accounts</h2>
     <p>Manage admin and staff roles.</p>
   </div>
-  <script src="../Scripts/dashboard.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Fetch the sidebar HTML
-        fetch("../pages/ham.html")
-          .then(response => response.text())
-          .then(data => {
-            // Insert the sidebar HTML into the container
-            document.getElementById("sidebar-container").innerHTML = data;
+  <button id="openAddModalBtn" class="add-btn">Add User</button>
+
+  <div id="user-container" class="user-list"></div>
   
-            // Dynamically load the ham.js script after the sidebar is inserted
-            const sidebarScript = document.createElement("script");
-            sidebarScript.src = "../scripts/ham.js";
-            sidebarScript.onload = () => console.log("ham.js loaded successfully");
-            document.body.appendChild(sidebarScript);
-          })
-          .catch(error => console.error("❌ Failed to load sidebar:", error));
-      });
-    </script>
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <h2>Edit User</h2>
+      <form id="editUserForm">
+        <input type="text" id="editName" placeholder="Name" required>
+        <input type="email" id="editEmail" placeholder="E-mail" required>
+        <input type="password" id="editPassword" placeholder="Password" required>
+        <input type="file" id="editImage" accept="image/*">
+        <div class="modal-buttons">
+          <button type="submit" class="save">Save Changes</button>
+          <button type="button" id="cancelEditBtn" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Modal -->
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+        <h3>Add User</h3>
+        <form id="addUserForm">
+          <input type="text" id="addName" placeholder="Name" required>
+          <input type="email" id="addEmail" placeholder="E-mail" required>
+          <input type="password" id="addPassword" placeholder="Password" required>
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+          <input type="file" id="addImage" accept="image/*">
+          <div class="modal-buttons">
+            <button type="submit" class="save">Add</button>
+            <button type="button" id="cancelAddBtn" class="cancel-btn">Cancel</button>
+          </div>
+        </form>
+    </div>
+  </div>
+
+  <script src="../Data/users.js"></script>
+  <script src="../Scripts/users.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch the sidebar HTML
+      fetch("../pages/ham.html")
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("sidebar-container").innerHTML = data;
+
+          const sidebarScript = document.createElement("script");
+          sidebarScript.src = "../scripts/ham.js";
+          sidebarScript.onload = () => console.log("ham.js loaded successfully");
+          document.body.appendChild(sidebarScript);
+        })
+        .catch(error => console.error("❌ Failed to load sidebar:", error));
+    });
+  </script>
 </body>
 </html>
