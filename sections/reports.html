@@ -55,23 +55,23 @@
   <script src="../Data/completed-orders.js"></script>
   <script src="../Data/pendings-orders.js"></script>
     <script src="../Scripts/reports.js"></script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          // Fetch the sidebar HTML
-          fetch("../pages/ham.html")
-            .then(response => response.text())
-            .then(data => {
-              // Insert the sidebar HTML into the container
-              document.getElementById("sidebar-container").innerHTML = data;
-    
-              // Dynamically load the ham.js script after the sidebar is inserted
-              const sidebarScript = document.createElement("script");
-              sidebarScript.src = "../scripts/ham.js";
-              sidebarScript.onload = () => console.log("ham.js loaded successfully");
-              document.body.appendChild(sidebarScript);
-            })
-            .catch(error => console.error("❌ Failed to load sidebar:", error));
-        });
-      </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fetch the sidebar HTML
+        fetch("ham.html")
+          .then(response => response.text())
+          .then(data => {
+            // Insert the sidebar HTML into the container
+            document.getElementById("sidebar-container").innerHTML = data;
+  
+            // Dynamically load the ham.js script after the sidebar is inserted
+            const sidebarScript = document.createElement("script");
+            sidebarScript.src = "ham.js";
+            sidebarScript.onload = () => console.log("ham.js loaded successfully");
+            document.body.appendChild(sidebarScript);
+          })
+          .catch(error => console.error("❌ Failed to load sidebar:", error));
+      });
+    </script>
   </body>
   </html>
