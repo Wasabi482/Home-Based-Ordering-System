@@ -6,6 +6,38 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   ["from-date", "to-date", "trend-from-date", "trend-to-date", "revenue-from-date", "revenue-to-date"].forEach(setMaxDate);
 
+
+  function checkInventoryLevels() {
+    const warnings = [];
+    inventory.forEach(item => {
+      const percentage = (item.stock / item.maxStock) * 100;
+      if (percentage < 30 && percentage > 0) {
+        warnings.push(`${item.name} is running low, please restock soon.`);
+      } else if (percentage === 0) {
+        warnings.push(`${item.name} is out of stock, please restock now.`);
+      }
+    });
+    displayInventoryWarnings(warnings);
+  }
+
+  function displayInventoryWarnings(warnings) {
+    const inventoryCard = document.querySelector(".card.warning");
+    inventoryCard.innerHTML = "<h3>Inventory Reports</h3>";
+    
+    if (warnings.length > 0) {
+      const warningList = document.createElement("ul");
+      warnings.forEach(warning => {
+        const li = document.createElement("li");
+        li.textContent = warning;
+        warningList.appendChild(li);
+      });
+      inventoryCard.appendChild(warningList);
+    } else {
+      inventoryCard.innerHTML += "<p>All inventory levels are sufficient.</p>";
+    }
+    inventoryCard.style.display = "block";
+  }
+  checkInventoryLevels();
   function fetchSalesData(from, to) {
     const startDate = new Date(from);
     const endDate = new Date(to);
@@ -122,15 +154,41 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function fetchTotalRevenue(from, to) {
-    return Math.floor(Math.random() * 50000 + 1000);
+    const startDate = new Date(from);
+    const endDate = new Date(to);
+    endDate.setHours(23, 59, 59, 999); // include the full end day
+  
+    // Get completed orders from localStorage
+    const completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [];
+  
+    console.log("All completed orders:", completedOrders);
+  
+    // Filter orders within date range
+    const filteredOrders = completedOrders.filter(order => {
+      const orderDate = new Date(order.date);
+      return orderDate >= startDate && orderDate <= endDate;
+    });
+  
+    console.log("Filtered orders:", filteredOrders);
+  
+    // Calculate total revenue
+    const totalRevenue = filteredOrders.reduce((sum, order) => {
+      return sum + parseFloat(order.total);
+    }, 0);
+  
+    // Display result
+    const revenueText = document.getElementById("total-revenue");
+    revenueText.textContent = `₱${totalRevenue.toFixed(2)}`;
   }
 
-  document.getElementById("generate-revenue").addEventListener("click", function () {
+  document.getElementById("generate-revenue").addEventListener("click", () => {
     const from = document.getElementById("revenue-from-date").value;
     const to = document.getElementById("revenue-to-date").value;
+  
     if (from && to) {
-      const revenue = fetchTotalRevenue(from, to);
-      document.getElementById("total-revenue").textContent = `₱${revenue.toLocaleString()}`;
+      fetchTotalRevenue(from, to);
+    } else {
+      alert("Please select both From and To dates.");
     }
   });
 });

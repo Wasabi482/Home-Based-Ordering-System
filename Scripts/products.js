@@ -18,16 +18,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayProducts() {
-        productsContainer.innerHTML = menu.map(product => `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>${product.description}</p>
-                <p>$${product.price.toFixed(2)}</p>
-                <button class="edit-btn" data-id="${product.id}">Edit</button>
-                <button class="delete-btn" data-id="${product.id}">Delete</button>
-                <button class="view-recipe-btn" data-id="${product.id}">View Recipe</button>
+        productContainer.innerHTML = menu.map((product, index) => `
+        <div class="product-card">
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p>$${product.price.toFixed(2)}</p>
+            <div class="buttons">
+            <button class="edit-btn" data-index="${index}" data-id="${product.id}">Edit</button>
+            <button class="delete-btn" data-index="${index}" data-id="${product.id}">Delete</button>
+            <button class="view-recipe-btn" data-id="${product.id}">View Recipe</button>
             </div>
+        </div>
         `).join("");
     }
 
@@ -51,20 +53,125 @@ document.addEventListener("DOMContentLoaded", function () {
     function showRecipeModal(productId) {
         const recipeModal = document.getElementById("recipeModal");
         const recipeDetails = document.getElementById("recipeDetails");
-        console.log(menu);
+    
         const recipe = getRecipeById(productId);
         
         if (!recipe) {
             recipeDetails.innerHTML = "<p>No recipe available for this product.</p>";
         } else {
-            recipeDetails.innerHTML = Object.entries(recipe).map(([ingredient, amount]) => `
-                <p>${ingredient}: ${amount}g</p>
-            `).join(" ");
+            recipeDetails.innerHTML = `
+                <table id="recipeTable">
+                    <thead>
+                        <tr>
+                            <th>Ingredient</th>
+                            <th>Amount (g/ml)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${Object.entries(recipe).map(([ingredient, amount]) => `
+                            <tr>
+                                <td><input type="text" class="ingredient-name" value="${ingredient}"></td>
+                                <td><input type="number" class="ingredient-amount" value="${amount}" min="0"></td>
+                                <td><button class="remove-ingredient">Remove</button></td>
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+                <button id="addIngredientBtn">Add Ingredient</button>
+                <button id="saveRecipeChangesBtn">Save Changes</button>
+            `;
         }
-        
+    
         recipeModal.style.display = "block";
+    
+        // Attach event listeners for adding and removing ingredients
+        document.getElementById("addIngredientBtn").addEventListener("click", addIngredientRow);
+        document.getElementById("saveRecipeChangesBtn").addEventListener("click", function () {
+            saveRecipeChanges(productId);
+        });
+    
+        document.querySelectorAll(".remove-ingredient").forEach(btn => {
+            btn.addEventListener("click", function () {
+                this.closest("tr").remove();
+            });
+        });
     }
-
+    function addIngredientRow() {
+        const recipeTable = document.querySelector("#recipeTable tbody");
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+            <td><input type="text" class="ingredient-name" placeholder="Ingredient Name"></td>
+            <td><input type="number" class="ingredient-amount" placeholder="Amount" min="0"></td>
+            <td><button class="remove-ingredient">Remove</button></td>
+        `;
+    
+        recipeTable.appendChild(newRow);
+    
+        // Attach event listener to remove button
+        newRow.querySelector(".remove-ingredient").addEventListener("click", function () {
+            newRow.remove();
+        });
+    }
+    function saveRecipeChanges(productId) {
+        const product = menu.find(item => item.id === productId);
+        if (!product) return;
+    
+        const productName = product.name.trim();
+        let category = "drinks"; // Default to drinks
+    
+        // Find the product inside the recipes array (drinks or foods)
+        let recipeObj = recipes.drinks.find(drink => drink.name === productName) || 
+                        recipes.foods.find(food => food.name === productName);
+        
+        if (!recipeObj) {
+            console.error("Recipe not found for:", productName);
+            return;
+        }
+    
+        if (recipes.foods.includes(recipeObj)) {
+            category = "foods"; // If it's found in foods, update category
+        }
+    
+        const recipeTableRows = document.querySelectorAll("#recipeTable tbody tr");
+        const updatedIngredients = {};
+    
+        recipeTableRows.forEach(row => {
+            let ingredientName = row.querySelector(".ingredient-name").value.trim();
+            let ingredientAmount = parseFloat(row.querySelector(".ingredient-amount").value);
+    
+            // Enforce correct ingredient name format
+            let formattedIngredient = toCamelCase(ingredientName);
+            if (!formattedIngredient) return; // Skip if invalid
+            
+            if (!isNaN(ingredientAmount)) {
+                updatedIngredients[formattedIngredient] = ingredientAmount;
+            }
+        });
+    
+        // Update the ingredients in the recipe object
+        recipeObj.ingredients = updatedIngredients;
+    
+        // Save to localStorage
+        localStorage.setItem("recipes", JSON.stringify(recipes));
+    
+        alert("Recipe updated successfully!");
+        document.getElementById("recipeModal").style.display = "none";
+    }
+    
+    function toCamelCase(str) {
+        return str
+            .toLowerCase() // Step 1: Convert everything to lowercase
+            .replace(/\s(.)/g, (match, letter) => letter.toUpperCase()) // Step 2: Capitalize first letter after each space
+            .replace(/\s/g, ""); // Step 3: Remove all spaces
+    }
+    
+    // Enforce correct formatting when typing in the input field
+    document.querySelectorAll(".ingredient-name").forEach(inputField => {
+        inputField.addEventListener("input", function () {
+            this.value = this.value.replace(/\s+/g, " ").trim(); // Auto-fix spaces
+        });
+    });
 
 
     function openEditModal(index) {

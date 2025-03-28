@@ -120,14 +120,12 @@ body {
 }
 
 .promos{
+  display: block;
   grid-row: span 2;
 }
 
 .input-promo{
-  margin-left: -40px;
-  overflow-y: scroll;
-  margin-left: -40px;
-  margin-top: 5px;
+  margin-top: -15px;
   margin-bottom: 5px;
   margin-right: 0;
 }

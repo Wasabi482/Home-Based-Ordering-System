@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const completedOrdersEl = document.getElementById("completed-orders");
     const totalRevenueEl = document.getElementById("total-revenue");
     const recentOrdersTable = document.querySelector(".recent-orders tbody");
-    const quickActionsContainer = document.querySelector(".quick-actions");
 
     let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
     let completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [];
@@ -24,19 +23,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const addPromoButton = document.getElementById("add-promo");
 
     function updateDashboard() {
-        totalOrdersEl.innerHTML = `Total Orders: <p>${totalOrdersToday}</p>`;
-        pendingOrdersEl.innerHTML = `Pending Orders: <p>${totalPendingOrders}</p>`;
-        completedOrdersEl.innerHTML = `Completed Orders: <p>${totalCompletedOrders}</p>`;
-        totalRevenueEl.innerHTML = `Total Revenue: <p>$${totalRevenueToday.toFixed(2)}</p>`;
-
-        recentOrdersTable.innerHTML = completedOrders.slice(-5).reverse().map(order => `
-            <tr>
-                <td>#${order.orderId}</td>
-                <td>${order.customer}</td>
-                <td class="completed">Completed</td>
-                <td>$${order.total.toFixed(2)}</td>
-            </tr>`).join("");
-    }
+      console.log(completedOrders);
+      totalOrdersEl.innerHTML = `Total Orders: <p>${totalOrdersToday}</p>`;
+      pendingOrdersEl.innerHTML = `Pending Orders: <p>${totalPendingOrders}</p>`;
+      completedOrdersEl.innerHTML = `Completed Orders: <p>${totalCompletedOrders}</p>`;
+      totalRevenueEl.innerHTML = `Total Revenue: <p>$${totalRevenueToday.toFixed(2)}</p>`;
+  
+      const latestFive = completedOrders.slice(0, 5); // gets first 5 (most recent)
+      recentOrdersTable.innerHTML = latestFive.map(order => `
+          <tr>
+              <td>#${order.orderId}</td>
+              <td>${order.customer}</td>
+              <td class="completed">Completed</td>
+              <td>$${order.total.toFixed(2)}</td>
+          </tr>`).join("");
+  }
 
     function fetchSalesData(from, to) {
         const startDate = new Date(from);

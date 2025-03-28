@@ -103,4 +103,4 @@ if (!localStorage.getItem("recipes")) {
   localStorage.setItem("recipes", JSON.stringify(recipes));
 }
 
-consol
+

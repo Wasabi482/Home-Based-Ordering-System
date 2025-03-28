@@ -1,56 +1,66 @@
 const inventory = JSON.parse(localStorage.getItem("inventory")) || [
   { 
-    name: "Coffee Beans", 
-    stock: 10000 ,
+    name: "coffeeBeans", 
+    stock: 10000,
+    maxStock: 20000, // 20kg max
     unit: "g"
   },
   { 
-    name: "Milk", 
+    name: "milk", 
     stock: 50000,
+    maxStock: 100000, // 100L max
     unit: "ml"
   },
   { 
-    name: "Sugar", 
+    name: "sugar", 
     stock: 10000,
+    maxStock: 30000, // 30kg max
     unit: "g"
   },
   {
-    name: "Chocolate Syrup",
+    name: "chocolateSyrup",
     stock: 50000,
+    maxStock: 75000, // 75L max
     unit: "ml"
   },
   {
-    name: "Ice Cubes",
+    name: "iceCubes",
     stock: 10000,
+    maxStock: 30000, // 30k pcs max
     unit: "pcs"
   },
   {
-    name: "Dough",
+    name: "dough",
     stock: 10000,
-    unit: "g",
+    maxStock: 25000, // 25kg max
+    unit: "g"
   },
   {
     name: "butter",
     stock: 10000,
+    maxStock: 20000, // 20kg max
     unit: "g"
   },
   {
-    name: "Cheese",
+    name: "cheese",
     stock: 10000,
+    maxStock: 15000, // 15kg max
     unit: "g"
   },
   {
-    name: "Chocolate Chip",
-    stock: 1000,
-    unit: "g"
-
-  },
-  {
-    name: "Blueberry Filling",
+    name: "chocolateChip",
     stock: 5000,
+    maxStock: 5000, // 5kg max
+    unit: "g"
+  },
+  {
+    name: "blueberryFilling",
+    stock: 10000,
+    maxStock: 10000, // 10L max
     unit: "ml"
   }
 ];
+
 if (!localStorage.getItem("inventory")) {
   localStorage.setItem("inventory", JSON.stringify(inventory));
 }

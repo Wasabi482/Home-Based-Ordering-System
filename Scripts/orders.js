@@ -8,10 +8,13 @@
 
     let pendingOrders = JSON.parse(localStorage.getItem("pendingOrders")) || [];
     let completedOrders = JSON.parse(localStorage.getItem("completedOrders")) || [];
+    let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+    const recipes = JSON.parse(localStorage.getItem("recipes")) || [];
 
     function saveOrders() {
         localStorage.setItem("pendingOrders", JSON.stringify(pendingOrders));
         localStorage.setItem("completedOrders", JSON.stringify(completedOrders));
+        localStorage.setItem("inventory", JSON.stringify(inventory));
     }
 
     function renderPendingOrders() {
@@ -47,17 +50,55 @@
             </tr>`).join("");
     }
 
+    function deductInventory(order) {
+        // First, check if all ingredients are available
+        for (let item of order.items) {
+            const recipe = recipes.drinks.find(r => r.name === item.name) || recipes.foods.find(r => r.name === item.name);
+            if (recipe) {
+                for (let [ingredient, quantity] of Object.entries(recipe.ingredients)) {
+                    const invItem = inventory.find(i => i.name === ingredient);
+                    if (!invItem || invItem.stock < quantity * item.quantity) {
+                        alert(`Not enough stock for ${ingredient}. Cannot complete order.`);
+                        return false; // Stop processing if any ingredient is insufficient
+                    }
+                }
+            }
+        }
+    
+        // If all ingredients are available, deduct inventory
+        order.items.forEach(item => {
+            const recipe = recipes.drinks.find(r => r.name === item.name) || recipes.foods.find(r => r.name === item.name);
+            if (recipe) {
+                Object.entries(recipe.ingredients).forEach(([ingredient, quantity]) => {
+                    const invItem = inventory.find(i => i.name === ingredient);
+                    if (invItem) {
+                        invItem.stock = Math.max(0, invItem.stock - (quantity * item.quantity));
+                    }
+                });
+            }
+        });
+    
+        localStorage.setItem("inventory", JSON.stringify(inventory)); // Save updated inventory
+        return true; // Allow order completion
+    }
+
     pendingOrdersContainer.addEventListener("click", (e) => {
         const index = e.target.dataset.index;
         if (e.target.classList.contains("done-btn")) {
-            completedOrders.unshift({ ...pendingOrders[index], date: new Date().toISOString().split("T")[0] });
-            pendingOrders.splice(index, 1);
+            if (deductInventory(pendingOrders[index])) { // Check stock before proceeding
+                const completedOrder = { ...pendingOrders[index], date: new Date().toISOString().split("T")[0] };
+                completedOrders.unshift(completedOrder);
+                pendingOrders.splice(index, 1);
+                saveOrders();
+                renderPendingOrders();
+                renderCompletedOrders();
+            }
         } else if (e.target.classList.contains("void-btn")) {
             pendingOrders.splice(index, 1);
+            saveOrders();
+            renderPendingOrders();
+            renderCompletedOrders();
         }
-        saveOrders();
-        renderPendingOrders();
-        renderCompletedOrders();
     });
 
     completedOrdersTable.addEventListener("click", (e) => {
