@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
   <title>Cafe Norte</title>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
     <div class="container">
-        <a class="navbar-brand fw-bold name" href="/"><img src="Images/formal-pic.png" class="img-fluid rounded-circle navbar-logo" alt="Profile Image">Paul </a>
+        <a class="navbar-brand fw-bold name" href="/"><img src="Images/CafeNortelogo.webp" class="img-fluid rounded-circle navbar-logo" alt="Profile Image">Cafe Norte</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="/"></a></li>
-                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about-me">About Me</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contacts">Contacts</a></li>
+                <li class="nav-item"><a class="nav-link" href="#shop">Order here</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about-us">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="#promos">Promos</a></li>
                 <li class="nav-item"><a class="btn-link text-dark js-dark fs-3 mx-3"></a></li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,9 +37,63 @@
     </div>
 </nav>
 
-  <section></section>
-  <script src="script.js"></script>
+  <div class="topimage">
+    <img src="Images/hans-peter-gauster-M1faIK1jvdE-unsplash.jpg" alt="">
+  </div>
 
+  <div class="header">
+    <h1>Cafe Norte</h1>
+    <h2>~Brewed with Love~</h2>
+    <div class="buttons">
+      <button>Order Online</button>
+      <button>Visit Us</button>
+    </div>
+  </div>
+
+  <div class="rotating-coffee">
+    <img src="Images/ba8a2b383ba4d6811b4f79fdf8c609f2.png" alt="Coffee Cup" />
+  </div>
+
+  <section class="menu-container">
+    <h1>We Serve</h1>
+    <div class="products-container" id="productsContainer"></div>
+  </section>
+
+  <section class="amenities-container">
+    <h1>Amenities</h1>
+    <div class="amenities">
+      <div class="amenities-card">
+        <img src="Images/shipping.png" alt="">
+        <p>Home Deliveries</p>
+      </div>
+      <div class="amenities-card">
+        <img src="Images/operation.png" alt="">
+        <p>Multiple Payment Modes</p>
+      </div>
+      <div class="amenities-card">
+        <img src="Images/confetti.png" alt="">
+        <p>Party Orders</p>
+      </div>
+      <div class="amenities-card">
+        <img src="Images/food-delivery.png" alt="">
+        <p>Take Away</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-container">
+    <h1>About Us</h1>
+    <div class="aboutus">
+    <div class="about-card description">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit accusamus, facilis labore numquam ea enim sed voluptatibus nisi, magni libero saepe, sequi non architecto voluptate ipsa officiis. Nam id nulla quia ullam incidunt? Ea officiis, sapiente recusandae expedita, assumenda suscipit pariatur itaque, nisi commodi quia eveniet sit. Accusamus, dolorum quae.</p>
+    </div>
+    <div class="about-card">
+      <img src="Images/fc78c4a6f3314e03e620fb7176175ad4.png" alt="">
+    </div>
+    </div>
+  </section>
+  <script src="/Data/menu.js"></script>
+  <script src="/scripts/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
