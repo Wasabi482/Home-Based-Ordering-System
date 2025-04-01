@@ -24,39 +24,4 @@ function displayProducts() {
 displayProducts();
 
 
-let index = 0;
-const slides = document.querySelectorAll(".testimonial-slide");
-const dots = document.querySelectorAll(".dot");
-
-function showSlide(n) {
-  slides.forEach((slide, i) => {
-    slide.classList.remove("active");
-    dots[i].classList.remove("active");
-  });
-
-  slides[n].classList.add("active");
-  dots[n].classList.add("active");
-
-  index = n;
-}
-
-function nextSlide() {
-  index = (index + 1) % slides.length;
-  showSlide(index);
-}
-
-function prevSlide() {
-  index = (index - 1 + slides.length) % slides.length;
-  showSlide(index);
-}
-
-function goToSlide(n) {
-  showSlide(n);
-}
-
-// Auto-slide every 3 seconds
-setInterval(nextSlide, 3000);
-
-// Initialize first slide
-showSlide(0);
 });

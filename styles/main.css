@@ -8,6 +8,11 @@ body{
   overflow-x: none;
 }
 
+h1 {
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 50px;
+}
+
 .navbar{
   background-color: #212529 !important;
   color: white !important;
@@ -98,7 +103,7 @@ body{
   animation: rotateCoffee 20s linear infinite;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .header{
     width: 100%;
     margin-left: 0px;
@@ -207,6 +212,12 @@ body{
 }
 
 /* Responsive Adjustments */
+@media (max-width: 1200px){
+  .menu-container{
+    margin-top: 100px;
+  }
+}
+
 @media (max-width: 768px) {
   .products-container {
     grid-template-columns: repeat(2, 1fr);
@@ -293,9 +304,6 @@ body{
   padding: 0 15px; /* Ensures spacing on smaller screens */
 }
 
-.about-container h1 {
-  margin-bottom: 30px;
-}
 
 .aboutus {
   display: grid;
@@ -553,7 +561,7 @@ body{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusts for smaller screens */
   gap: 15px;
-  max-width: 100%;
+  max-width: 1200px;
   margin: auto;
 }
 
@@ -566,7 +574,7 @@ body{
   display: flex;
   flex-direction: column;
   width: 100%; /* Makes sure it adapts */
-  max-width: 600px; /* Prevents it from being too large */
+  max-width: 500px; /* Prevents it from being too large */
   height: auto; /* Adjusts dynamically */
   padding: 20px;
   text-align: center;
