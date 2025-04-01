@@ -195,22 +195,6 @@ h1 {
   margin: 3px 0;
 }
 
-/* Add a button for ordering */
-.product-card .order-btn {
-  background-color: #7a5c4f;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.product-card .order-btn:hover {
-  background-color: #5c4033;
-}
-
 /* Responsive Adjustments */
 @media (max-width: 1200px){
   .menu-container{

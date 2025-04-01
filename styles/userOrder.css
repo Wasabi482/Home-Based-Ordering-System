@@ -1,0 +1,138 @@
+body{
+  background-color: white;
+  color: #5a3e36;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: none;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 50px;
+}
+
+
+.navbar{
+  background-color: #212529 !important;
+  color: white !important;
+}
+
+.navbar-brand, .nav-link{
+  color: white !important;
+}
+
+.navbar button{
+  color: white !important;
+  background-color: white;
+}
+
+.navbar-logo{
+  max-width: 50px; /* Adjust this value as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 5px;
+}
+
+/*Products*/
+.menu-container {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 0 15px; /* Ensures spacing on smaller screens */
+}
+
+.menu-container h1 {
+  margin-top: 100px;
+  margin-bottom: 30px;
+}
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); /* More flexible */
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px; /* More balanced spacing */
+  text-align: center;
+  
+}
+
+.product-card img {
+  width: 300px;
+  height: auto; /* Auto height for flexible images */
+  max-height: 250px; /* Limits image size while keeping aspect ratio */
+  object-fit: cover;
+}
+
+.product-card .content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.product-card h3 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.product-card p {
+  font-size: 14px;
+  color: #7a5c4f;
+  margin: 3px 0;
+}
+
+/* Add a button for ordering */
+.product-card .order-btn {
+  background-color: #7a5c4f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.product-card .order-btn:hover {
+  background-color: #5c4033;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px){
+  .menu-container{
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu-container h1{
+    margin-top: 50px;
+  }
+  .product-card{
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-container {
+    grid-template-columns: 1fr;
+  }
+}

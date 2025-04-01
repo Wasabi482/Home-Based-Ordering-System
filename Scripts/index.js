@@ -11,10 +11,10 @@ function displayProducts() {
   productContainer.innerHTML = menu.map((product, index) => `
   <div class="product-card">
       <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p>${product.description}</p>
-      <p>$${product.price.toFixed(2)}</p>
-      <div class="buttons">
+      <div class="content">
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <p>$${product.price.toFixed(2)}</p>
       </div>
   </div>
   `).join("");
