@@ -2,23 +2,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const productContainer = document.getElementById("productsContainer");
     const addModal = document.getElementById("addModal");
     const editModal = document.getElementById("editModal");
-    const openAddModalBtn = document.getElementById("openAddModalBtn"); // Target the add button
+    const openAddModalBtn = document.getElementById("openAddModalBtn");
     const addProductBtn = document.getElementById("addProductBtn");
     const cancelAddBtn = document.getElementById("cancelAddBtn");
     const saveChangesBtn = document.getElementById("saveChangesBtn");
     const cancelEditBtn = document.getElementById("cancelEditBtn");
 
-    let menu = JSON.parse(localStorage.getItem("menu")) || [];
+    let menu = JSON.parse(localStorage.getItem("menu")) || {};
     let currentEditIndex = null;
 
-    let recipes = JSON.parse(localStorage.getItem("recipes")) || {};
-    console.log(recipes);
+    let recipes = JSON.parse(localStorage.getItem("recipes")) || { drinks: [], foods: [] };
+
     function saveToLocalStorage() {
         localStorage.setItem("menu", JSON.stringify(menu));
     }
 
     function displayProducts() {
-        productContainer.innerHTML = menu.map((product, index) => `
+        const allMenuItems = [...menu.drinks, ...menu.foods];
+        productContainer.innerHTML = allMenuItems.map((product, index) => `
         <div class="product-card">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
@@ -34,10 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function getRecipeById(productId) {
-        const product = menu.find(item => item.id === productId);
+        const product = [...menu.drinks, ...menu.foods].find(item => item.id === productId);
         if (!product) return null;
     
-        const productName = product.name.trim(); // Normalize name
+        const productName = product.name.trim();
     
         const recipe =
             recipes.drinks.find(drink => drink.name === productName)?.ingredients ||
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         return recipe;
     }
+
     function showRecipeModal(productId) {
         const recipeModal = document.getElementById("recipeModal");
         const recipeDetails = document.getElementById("recipeDetails");
@@ -80,16 +82,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 </table>
                 <button id="addIngredientBtn">Add Ingredient</button>
                 <button id="saveRecipeChangesBtn">Save Changes</button>
+                <button id="cancelRecipeEditBtn">Cancel</button>
             `;
         }
     
         recipeModal.style.display = "block";
     
-        // Attach event listeners for adding and removing ingredients
         document.getElementById("addIngredientBtn").addEventListener("click", addIngredientRow);
         document.getElementById("saveRecipeChangesBtn").addEventListener("click", function () {
             saveRecipeChanges(productId);
         });
+        document.getElementById("cancelRecipeEditBtn").addEventListener("click", () => {
+            recipeModal.style.display = "none";
+        })
     
         document.querySelectorAll(".remove-ingredient").forEach(btn => {
             btn.addEventListener("click", function () {
@@ -97,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+
     function addIngredientRow() {
         const recipeTable = document.querySelector("#recipeTable tbody");
         const newRow = document.createElement("tr");
@@ -105,22 +111,19 @@ document.addEventListener("DOMContentLoaded", function () {
             <td><input type="number" class="ingredient-amount" placeholder="Amount" min="0"></td>
             <td><button class="remove-ingredient">Remove</button></td>
         `;
-    
         recipeTable.appendChild(newRow);
-    
-        // Attach event listener to remove button
         newRow.querySelector(".remove-ingredient").addEventListener("click", function () {
             newRow.remove();
         });
     }
+
     function saveRecipeChanges(productId) {
-        const product = menu.find(item => item.id === productId);
+        const product = [...menu.drinks, ...menu.foods].find(item => item.id === productId);
         if (!product) return;
     
         const productName = product.name.trim();
-        let category = "drinks"; // Default to drinks
+        let category = "drinks"; 
     
-        // Find the product inside the recipes array (drinks or foods)
         let recipeObj = recipes.drinks.find(drink => drink.name === productName) || 
                         recipes.foods.find(food => food.name === productName);
         
@@ -130,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     
         if (recipes.foods.includes(recipeObj)) {
-            category = "foods"; // If it's found in foods, update category
+            category = "foods"; 
         }
     
         const recipeTableRows = document.querySelectorAll("#recipeTable tbody tr");
@@ -140,19 +143,16 @@ document.addEventListener("DOMContentLoaded", function () {
             let ingredientName = row.querySelector(".ingredient-name").value.trim();
             let ingredientAmount = parseFloat(row.querySelector(".ingredient-amount").value);
     
-            // Enforce correct ingredient name format
             let formattedIngredient = toCamelCase(ingredientName);
-            if (!formattedIngredient) return; // Skip if invalid
+            if (!formattedIngredient) return; 
             
             if (!isNaN(ingredientAmount)) {
                 updatedIngredients[formattedIngredient] = ingredientAmount;
             }
         });
     
-        // Update the ingredients in the recipe object
         recipeObj.ingredients = updatedIngredients;
     
-        // Save to localStorage
         localStorage.setItem("recipes", JSON.stringify(recipes));
     
         alert("Recipe updated successfully!");
@@ -161,22 +161,14 @@ document.addEventListener("DOMContentLoaded", function () {
     
     function toCamelCase(str) {
         return str
-            .toLowerCase() // Step 1: Convert everything to lowercase
-            .replace(/\s(.)/g, (match, letter) => letter.toUpperCase()) // Step 2: Capitalize first letter after each space
-            .replace(/\s/g, ""); // Step 3: Remove all spaces
+            .toLowerCase() 
+            .replace(/\s(.)/g, (match, letter) => letter.toUpperCase()) 
+            .replace(/\s/g, ""); 
     }
-    
-    // Enforce correct formatting when typing in the input field
-    document.querySelectorAll(".ingredient-name").forEach(inputField => {
-        inputField.addEventListener("input", function () {
-            this.value = this.value.replace(/\s+/g, " ").trim(); // Auto-fix spaces
-        });
-    });
-
 
     function openEditModal(index) {
         currentEditIndex = index;
-        const product = menu[index];
+        const product = [...menu.drinks, ...menu.foods][index];
         document.getElementById("editName").value = product.name;
         document.getElementById("editPrice").value = product.price;
         document.getElementById("editCategory").value = product.category;
@@ -192,15 +184,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (currentEditIndex === null) return;
         const fileInput = document.getElementById("editImage");
         const file = fileInput.files[0];
-        menu[currentEditIndex].name = document.getElementById("editName").value;
-        menu[currentEditIndex].price = parseFloat(document.getElementById("editPrice").value);
-        menu[currentEditIndex].category = document.getElementById("editCategory").value;
-        menu[currentEditIndex].description = document.getElementById("editDescription").value;
+        const allMenuItems = [...menu.drinks, ...menu.foods];
+        allMenuItems[currentEditIndex].name = document.getElementById("editName").value;
+        allMenuItems[currentEditIndex].price = parseFloat(document.getElementById("editPrice").value);
+        allMenuItems[currentEditIndex].category = document.getElementById("editCategory").value;
+        allMenuItems[currentEditIndex].description = document.getElementById("editDescription").value;
         
         if (file) {
             const reader = new FileReader();
             reader.onload = function () {
-                menu[currentEditIndex].image = reader.result;
+                allMenuItems[currentEditIndex].image = reader.result;
                 saveToLocalStorage();
                 displayProducts();
                 closeModal();
@@ -227,7 +220,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 description: document.getElementById("addDescription").value,
                 image: reader.result
             };
-            menu.push(newProduct);
+            if (newProduct.category === "Coffee" || newProduct.category === "Cold Drinks" || newProduct.category === "Tea") {
+                menu.drinks.push(newProduct);
+            } else {
+                menu.foods.push(newProduct);
+            }
             saveToLocalStorage();
             displayProducts();
             closeModal();
@@ -236,7 +233,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function deleteProduct(index) {
-        menu.splice(index, 1);
+        const allMenuItems = [...menu.drinks, ...menu.foods];
+        if (index < menu.drinks.length) {
+            menu.drinks.splice(index, 1);
+        } else {
+            menu.foods.splice(index - menu.drinks.length, 1);
+        }
         saveToLocalStorage();
         displayProducts();
     }
@@ -245,15 +247,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".modal").forEach(modal => modal.style.display = "none");
     }
 
-    // Event Listeners
-    openAddModalBtn.addEventListener("click", openAddModal); // Open Add Modal
+    openAddModalBtn.addEventListener("click", openAddModal);
     addProductBtn.addEventListener("click", addProduct);
     cancelAddBtn.addEventListener("click", closeModal);
     saveChangesBtn.addEventListener("click", saveChanges);
     cancelEditBtn.addEventListener("click", closeModal);
-    cancelViewBtn.addEventListener("click", closeModal);
 
-    // Product Edit/Delete Delegation
     productContainer.addEventListener("click", (e) => {
         const index = e.target.dataset.index;
         if (e.target.classList.contains("edit-btn")) {
@@ -264,15 +263,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const productId = e.target.dataset.id;
             showRecipeModal(productId);
         }
-    });
-
-    document.getElementById("saveRecipeChangesBtn").addEventListener("click", function () {
-        const productId = document.querySelector(".view-recipe-btn").dataset.id;
-        saveRecipeChanges(productId);
-    });
-
-    document.getElementById("cancelRecipeEditBtn").addEventListener("click", function () {
-        document.getElementById("recipeModal").style.display = "none";
     });
 
     displayProducts();
