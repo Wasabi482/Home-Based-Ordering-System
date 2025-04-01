@@ -53,6 +53,7 @@ body{
 }
 
 .header{
+  border: solid red;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -87,6 +88,7 @@ body{
 }
 
 .rotating-coffee{
+  border: solid red;
   position: absolute;
   right: 0;
   margin-right: 10px;
@@ -98,6 +100,28 @@ body{
   animation: rotateCoffee 20s linear infinite;
 }
 
+@media (max-width: 768px) {
+  .header{
+    width: 100%;
+    margin-left: 0px;
+    margin-top: -50px;
+  }
+  .rotating-coffee{
+    margin-top: 250px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .rotating-coffee img{
+    border: solid red;
+    width: 100px;
+  }
+}
+
 @keyframes rotateCoffee {
   from {
     transform: rotate(0deg);
@@ -107,21 +131,23 @@ body{
   }
 }
 
-.menu-container{
-  margin-top: 100px;
+.menu-container {
   text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 0 15px; /* Ensures spacing on smaller screens */
 }
 
-.menu-container h1{
-  margin-bottom: 50px;
-
+.menu-container h1 {
+  margin-bottom: 30px;
 }
 
 .products-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 15px; /* Reduced gap to make cards closer */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* More flexible */
+  gap: 20px;
   max-width: 1000px;
+  margin: auto;
 }
 
 .product-card {
@@ -132,8 +158,9 @@ body{
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  height: auto; /* Allow card to shrink dynamically */
-  padding: 10px; /* Reduce padding for a more compact look */
+  align-items: center;
+  padding: 15px; /* More balanced spacing */
+  text-align: center;
 }
 
 .product-card:hover {
@@ -142,7 +169,8 @@ body{
 
 .product-card img {
   width: 100%;
-  height: 300px; /* Reduced image height */
+  height: auto; /* Auto height for flexible images */
+  max-height: 250px; /* Limits image size while keeping aspect ratio */
   object-fit: cover;
 }
 
@@ -151,38 +179,69 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px; /* Reduced padding */
-  text-align: center;
+  padding: 10px;
 }
 
 .product-card h3 {
-  margin: 5px 0; /* Reduced margin to bring text closer */
+  margin: 5px 0;
   font-size: 18px;
 }
 
 .product-card p {
   font-size: 14px;
   color: #7a5c4f;
-  margin: 3px 0; /* Reduced spacing */
-}
-.amenities-container{
-  margin-top: 100px;
-  text-align: center;
-  margin-bottom: 100px;
+  margin: 3px 0;
 }
 
-.amenities-container h1{
+/* Add a button for ordering */
+.product-card .order-btn {
+  background-color: #7a5c4f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.product-card .order-btn:hover {
+  background-color: #5c4033;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .products-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .products-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.amenities-container {
+  margin-top: 50px;
   margin-bottom: 50px;
+  text-align: center;
+  padding: 0 15px; /* Adds spacing for small screens */
 }
 
-.amenities{
+.amenities-container h1 {
+  margin-bottom: 30px; /* Reduce margin for better spacing */
+}
+
+.amenities {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px; /* Reduced gap to make cards closer */
-  max-width: 1200px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for better mobile view */
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
 }
 
-.amenities-card{
+.amenities-card {
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -190,68 +249,130 @@ body{
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  height: 250px; /* Allow card to shrink dynamically */
-  padding: 10px; /* Reduce padding for a more compact look */
+  padding: 20px;
   text-align: center;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
-.amenities-card img{
-  width: 50px;
-  height: 50px;
+.amenities-card img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px; /* Adds space between icon and text */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .amenities {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on tablets */
+  }
+
+  .amenities-card img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .amenities {
+    grid-template-columns: 1fr; /* Single column on small phones */
+  }
+
+  .amenities-card {
+    padding: 15px;
+  }
+
+  .amenities-card img {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 /*About us*/
-.about-container{
+.about-container {
   text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 0 15px; /* Ensures spacing on smaller screens */
 }
 
-.aboutus{
+.about-container h1 {
+  margin-bottom: 30px;
+}
+
+.aboutus {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px; /* Reduced gap to make cards closer */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* More flexibility */
+  gap: 20px;
   max-width: 1000px;
-  margin-bottom: 100px;
+  margin: auto;
+  align-items: center; /* Ensures better alignment */
 }
 
-.about-card{
+.about-card {
   overflow: hidden;
-  height: 250px; /* Allow card to shrink dynamically */
   text-align: center;
-  justify-content: space-around;
-  align-items: center;
 }
 
-.description{
+.description {
   display: flex;
-  text-align: center;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  grid-column: span 2;
+  padding: 15px;
 }
 
+.description p {
+  max-width: 600px; /* Limits width for better readability */
+  line-height: 1.6;
+  font-size: 16px;
+}
 
-.about-card img{
+.about-card img {
   width: 100%;
-  height: 300px; /* Reduced image height */
+  height: auto;
+  max-height: 300px; /* Ensures images don't become too large */
   object-fit: contain;
 }
 
-.whyus-container{
-  margin-top: 100px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .aboutus {
+    grid-template-columns: 1fr; /* Stack items on smaller screens */
+    text-align: center;
+  }
+
+  .description {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .description p {
+    max-width: 90%;
+  }
+}
+
+
+.whyus-container {
+  margin-top: 50px;
+  margin-bottom: 50px;
   text-align: center;
-  margin-bottom: 100px;
+  padding: 0 15px; /* Adds spacing for smaller screens */
 }
 
-.why-us{
+.whyus-container h1 {
+  margin-bottom: 30px;
+}
+
+.why-us {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px; /* Reduced gap to make cards closer */
-  max-width: 1200px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
 }
 
-.whyus-card{
+.whyus-card {
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -259,32 +380,63 @@ body{
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  height: 250px; /* Allow card to shrink dynamically */
-  padding: 10px; /* Reduce padding for a more compact look */
+  padding: 20px; /* Adds more spacing */
   text-align: center;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
-.whyus-card img{
-  width: 100px;
-  height: 100px;
+.whyus-card img {
+  width: 80px; /* Reduce size slightly */
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease-in-out;
 }
 
-.gallery-container{
-  margin-top: 100px;
+/* Hover effect for cards */
+.whyus-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .why-us {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on tablets */
+  }
+
+  .whyus-card img {
+    width: 60px; /* Reduce icon size */
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .why-us {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+}
+
+.gallery-container {
+  margin-top: 50px;
+  margin-bottom: 50px;
   text-align: center;
-  margin-bottom: 100px;
+  padding: 0 15px; /* Adds spacing for smaller screens */
 }
 
-.gallery{
+.gallery-container h1 {
+  margin-bottom: 30px;
+}
+
+.gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px; /* Reduced gap to make cards closer */
-  max-width: 1200px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
 }
 
-.gallery-card{
+.gallery-card {
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -292,32 +444,54 @@ body{
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  height: 250px; /* Allow card to shrink dynamically */
-  padding: 10px; /* Reduce padding for a more compact look */
+  padding: 10px;
   text-align: center;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
-.gallery-card img{
+.gallery-card img {
   width: 100%;
-  height: 100%;
+  height: auto; /* Maintain original aspect ratio */
+  border-radius: 10px; /* Adds slight rounding to match card */
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
 }
 
-.videos-container{
-  margin-top: 100px;
+/* Hover effect for images */
+.gallery-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+}
+
+.videos-container {
+  margin-top: 50px;
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
+  padding: 0 10px; /* Adds some space on smaller screens */
 }
 
-.videos{
+.videos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 15px; /* Reduced gap to make cards closer */
-  max-width: 1300px;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Adjusts for smaller screens */
+  gap: 15px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.videos-card{
+.videos-card {
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -325,24 +499,37 @@ body{
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  width: 600px;
-  height: 400px; /* Allow card to shrink dynamically */
-  padding: 10px; /* Reduce padding for a more compact look */
+  width: 100%; /* Makes sure it adapts */
+  max-width: 600px; /* Prevents it from being too large */
+  height: auto; /* Adjusts dynamically */
+  padding: 10px;
   text-align: center;
   justify-content: space-around;
   align-items: center;
+  margin: auto; /* Centers the video cards */
 }
 
-.videos-card iframe{
+.videos-card iframe {
   width: 100%;
-  height: 100%;
+  height: 250px; /* Adjusts height for mobile */
   border-radius: 10px;
+}
+
+/* Media Queries for Smaller Screens */
+@media (max-width: 768px) {
+  .videos {
+    grid-template-columns: 1fr; /* Single column layout for phones */
+  }
+  
+  .videos-card iframe {
+    height: 200px; /* Smaller height for mobile */
+  }
 }
 
 /*Testimonials*/
 .testimonial-section {
   background: #e6e6e6;
-  width: 1200px;
+  width: 100%;
 }
 
 
@@ -350,7 +537,7 @@ body{
   background: transparent;
   border-radius: 10px;
   padding: 30px;
-  max-width: 600px;
+  width: 100%;
   height: 150px;
   margin: auto;
   margin-top: 10px;
@@ -358,23 +545,22 @@ body{
 
 }
 
-.contactus-container{
-  margin-top: 100px;
-  margin-bottom: 100px;
-}
-
-.contactus-container h1{
+.contactus-container {
+  margin-top: 50px;
+  margin-bottom: 50px;
   text-align: center;
+  padding: 0 15px; /* Adds padding for better spacing on small screens */
 }
 
-.contact-us{
+.contact-us {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 15px; /* Reduced gap to make cards closer */
-  max-width: 1300px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusts for smaller screens */
+  gap: 15px;
+  max-width: 100%;
+  margin: auto;
 }
 
-.contactus-card{
+.contactus-card {
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -382,10 +568,61 @@ body{
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  width: 600px;
-  height: 400px; /* Allow card to shrink dynamically */
-  padding: 10px; /* Reduce padding for a more compact look */
+  width: 100%; /* Makes sure it adapts */
+  max-width: 600px; /* Prevents it from being too large */
+  height: auto; /* Adjusts dynamically */
+  padding: 20px;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto; /* Centers the cards */
+}
 
+/* Responsive Google Maps */
+.contactus-card iframe {
+  width: 100%;
+  height: 300px; /* Adjusts height for mobile */
+  border-radius: 10px;
+}
+
+/* Contact Details */
+.details {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  text-align: left;
+}
+
+.details i {
+  font-size: 24px;
+  color: #ff9800; /* Adjust icon color */
+}
+
+.info h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Media Queries for Smaller Screens */
+@media (max-width: 768px) {
+  .contact-us {
+    grid-template-columns: 1fr; /* Single column layout for mobile */
+  }
+
+  .contactus-card iframe {
+    height: 250px; /* Smaller height for mobile */
+  }
+
+  .details {
+    flex-direction: column; /* Stack icons and text */
+    text-align: center;
+  }
 }
 
 .details{
