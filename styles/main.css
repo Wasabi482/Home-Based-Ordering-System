@@ -303,3 +303,99 @@ body{
   width: 100%;
   height: 100%;
 }
+
+.videos-container{
+  margin-top: 100px;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.videos{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 15px; /* Reduced gap to make cards closer */
+  max-width: 1300px;
+}
+
+.videos-card{
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 400px; /* Allow card to shrink dynamically */
+  padding: 10px; /* Reduce padding for a more compact look */
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.videos-card iframe{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+/*Testimonials*/
+.testimonial-section {
+  background: #e6e6e6;
+  width: 1200px;
+}
+
+
+.testimonial-slide {
+  background: transparent;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 600px;
+  height: 150px;
+  margin: auto;
+  margin-top: 10px;
+  text-align: center;
+
+}
+
+.contactus-container{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.contactus-container h1{
+  text-align: center;
+}
+
+.contact-us{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 15px; /* Reduced gap to make cards closer */
+  max-width: 1300px;
+}
+
+.contactus-card{
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 400px; /* Allow card to shrink dynamically */
+  padding: 10px; /* Reduce padding for a more compact look */
+
+}
+
+.details{
+  display: flex;
+  flex: row;
+  margin-bottom: 10px;
+}
+.details i{
+  font-size: 30px;
+  width: 80px;
+  margin: 10px;
+  text-align: center;
+}
