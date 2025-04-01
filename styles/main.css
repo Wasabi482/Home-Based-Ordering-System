@@ -22,7 +22,7 @@ body{
   background-color: white;
 }
 
-.navbar-logo {
+.navbar-logo{
   max-width: 50px; /* Adjust this value as needed */
   height: auto; /* Maintain aspect ratio */
   margin: 0 5px;
@@ -398,4 +398,52 @@ body{
   width: 80px;
   margin: 10px;
   text-align: center;
+}
+
+/*Footer*/
+.footer{
+  background-color: #212529;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding: 10px;
+}
+.footer-logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  color: white;
+  margin-left: 50px;
+}
+.footer-logo img{
+  width: 150px;
+
+}
+
+.socials{
+  position: absolute;
+  right: 0;
+  color: white;
+  width: 170px;
+}
+.socials i{
+  font-size: 30px;
+}
+
+.copyright{
+  color: white;
+  display: flex;
+  flex: row;
+  position: absolute;
+  bottom: 0;
+  right:0;
+}
+
+.copyright i{
+  padding-top: 4px;
+  padding-right: 3px;
 }
