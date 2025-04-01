@@ -53,7 +53,6 @@ body{
 }
 
 .header{
-  border: solid red;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -88,7 +87,6 @@ body{
 }
 
 .rotating-coffee{
-  border: solid red;
   position: absolute;
   right: 0;
   margin-right: 10px;
@@ -117,7 +115,6 @@ body{
   }
 
   .rotating-coffee img{
-    border: solid red;
     width: 100px;
   }
 }
@@ -680,7 +677,21 @@ body{
   right:0;
 }
 
-.copyright i{
-  padding-top: 4px;
-  padding-right: 3px;
+
+
+@media (max-width: 768px) {
+  .footer-logo{
+    margin-left: 0px;
+    left: 0;
+    justify-content: start;
+  }
+  .footer-logo img{
+    width: 50px;
+  }
+
+  .copyright{
+    width: 100%;
+    text-align: center;
+  }
+
 }
