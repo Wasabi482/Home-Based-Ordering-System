@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="Images/CafeNortelogo.webp">
 
-  <link rel="stylesheet" href="../styles/userOrder.css">
+  <link rel="stylesheet" href="../styles/cart.css">
   <title>Cafe Norte</title>
 </head>
 <body>
@@ -39,15 +39,28 @@
         </div>
     </div>
   </nav>
+  <button class="cart"></button>
+  <section class="order-container">
+    <h1>Your Cart</h1>
 
-  <button class="cart"><a href="cart.html" style=" color:black; "><i class="fa-solid fa-cart-shopping"></i></a></button>
-  <section class="menu-container">
-    <h1>We Serve</h1>
-    <div class="products-container" id="productsContainer"></div>
+    <div class="items-container">
+      <div class="orders">
+        <div id="cartItemsContainer"></div>
+      </div>
+      <div class="items-card summary">
+        <h3>Order Summary</h3>
+          <p>Subtotal: $<span id="subtotal"></span></p>
+          <p>Delivery Fee: $<span id="deliveryFee">5.00</span></p>
+          <p>Total: $<span id="totalAmount">0.00</span></p>
+          <button class="btn btn-primary" id="proceedOrderBtn">Proceed with Order</button>
+      </div>
+    </div>
   </section>
 
-  <script src="../Data/menu.js"></script>
-  <script src="../Scripts/userOrder.js"></script>
+  <!-- JavaScript files (ensure paths are correct) -->
+   <script src="../Data/pendings-orders.js"></script>
+  <script src="../Data/cart.js"></script>  <!-- Ensure correct path -->
+  <script src="../Scripts/cart.js"></script>  <!-- Ensure correct path -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
