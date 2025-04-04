@@ -135,10 +135,10 @@ function updateCartQuantity() {
 
   if (cartButton) {
     cartButton.innerHTML = `
-      <a href="cart.html" style="color:black;">
-        <i class="fa-solid fa-cart-shopping">${totalQuantity > 0 ? `<span class="cart-count">${totalQuantity}</span>` : ""}</i>
-        
-      </a>
+      <button>
+        <i class="fa-solid fa-cart-shopping"></i>
+        ${totalQuantity > 0 ? `<span class="cart-count">${totalQuantity}</span>` : ""}
+      </button>
     `;
   }
 }

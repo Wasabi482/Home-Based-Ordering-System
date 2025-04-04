@@ -172,10 +172,10 @@ document.addEventListener("DOMContentLoaded", function () {
     
     document.querySelectorAll(".cart").forEach(cartButton => {
       cartButton.innerHTML = `
-        <a href="cart.html" style="color:black; position:relative;">
+        <button>
           <i class="fa-solid fa-cart-shopping"></i>
           ${totalQuantity > 0 ? `<span class="cart-count">${totalQuantity}</span>` : ""}
-        </a>
+        </button>
       `;
     });
   }

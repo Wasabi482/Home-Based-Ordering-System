@@ -151,21 +151,25 @@ h1 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   width:80px;
   height: 80px;
+  display: flex;
+  justify-content: center;
 }
 .cart i{
   margin-top: 10px;
   font-size: 40px;
 }
 
-.cart a {
-  position: relative;
+.cart button {
+  border: none;
+  background: transparent;
   text-decoration: none;
+  position: relative;
 }
 
 .cart .cart-count {
   position: absolute;
-  top: -30px; /* Moves the badge above the cart icon */
-  right: 50%;
+  top: 0; /* Moves the badge above the cart icon */
+  right: 0;
   transform: translateX(50%);
   background: red;
   color: white;
