@@ -88,7 +88,6 @@ h1 {
 }
 
 /*Orders*/
-
 .order-container{
   text-align: center;
   margin-top: 50px;
@@ -107,7 +106,6 @@ h1 {
   gap: 20px;
   max-width: 1200px;
   margin: auto;
-  height: 1000px;
 }
 
 .items-card{
@@ -127,7 +125,7 @@ h1 {
 
 .orders{
   grid-column: span 2;
-  height: 200px;
+  height: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
 }
@@ -193,8 +191,10 @@ h1 {
   }
 
   .summary{
-    margin-top: 300px;
-    width: auto;
-    margin-right:-10px;
+    margin-top: 10px;
+  }
+
+  .items-container{
+    gap: 0px;
   }
 }
