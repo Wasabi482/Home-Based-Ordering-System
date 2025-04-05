@@ -13,6 +13,7 @@ const amountInput = document.getElementById("amount-input");
 const gcashError = document.getElementById("gcash-error");
 const cashRadio = document.getElementById("payment-method-cash");
 const gcashRadio = document.getElementById("payment-method-gcash");
+const amountLabel = document.getElementById("amount-label");  // Select the label for amount input
 
 // Function to render cart items
 function renderCartItems() {
@@ -164,12 +165,14 @@ function handlePaymentValidation() {
 
     // Show the amount input field for GCash only
     amountInput.style.display = "block";
+    amountLabel.style.display = "block";  // Show the label when GCash is selected
   } else {
     gcashError.style.display = "none";
     proceedOrderBtn.disabled = false;
 
     // Hide the amount input field when cash is selected
     amountInput.style.display = "none";
+    amountLabel.style.display = "none";  // Hide the label when Cash is selected
   }
 }
 
