@@ -1,5 +1,4 @@
 // Retrieve cart items from localStorage (if any)
-console.log(pendingOrders);
 let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
 // Set the delivery fee (constant for now)
@@ -31,9 +30,6 @@ function renderCartItems() {
     // Price for the item taking size and quantity into account
     const itemPrice = item.price * item.quantity;
 
-    // Always show the size for both food and drinks
-    const showSize = item.size ? `<p>Size: ${item.size}</p>` : ""; 
-
     // Add item details to the container
     itemContainer.innerHTML = `
       <div class="items-card">
@@ -43,7 +39,6 @@ function renderCartItems() {
         <div class="info">
           <div class="details">
             <h5>${item.name}</h5>
-            ${showSize}  <!-- Always show size -->
             <p>Quantity: ${item.quantity}</p>
           </div>
           <div class="price">
@@ -68,7 +63,7 @@ function renderCartItems() {
   const totalPrice = subtotal + DELIVERY_FEE;
   totalAmountElement.innerText = totalPrice.toFixed(2);
 }
-// Function to proceed with the order
+
 // Function to proceed with the order
 function proceedWithOrder() {
   // Get customer information from localStorage (if any) or prompt the user
@@ -124,10 +119,9 @@ function proceedWithOrder() {
   alert("Order placed successfully! You will be redirected.");
   // window.location.href = "../Pages/order-confirmation.html"; // Redirect to a confirmation page
 }
+
 // Event listener for the "Proceed with Order" button
 proceedOrderBtn.addEventListener("click", proceedWithOrder);
-
-
 
 function updateCartQuantity() {
   let totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);

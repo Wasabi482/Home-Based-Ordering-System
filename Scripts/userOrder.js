@@ -26,13 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
               <p>${drink.description}</p>
               <p>Base Price: $<span id="drink-price-${drink.id}">${drink.price.toFixed(2)}</span></p>
               
-              <label for="size-${drink.id}">Choose Size:</label> 
-              <select id="size-${drink.id}" class="size-select" data-id="${drink.id}">
-                <option value="small">Small (-$0.50)</option>
-                <option value="medium" selected>Medium (Base Price)</option>
-                <option value="large">Large (+$1.00)</option>
-              </select>
-
               <label for="drink-quantity-${drink.id}">Quantity:</label> 
               <input type="number" id="drink-quantity-${drink.id}" class="drink-quantity-input" data-id="${drink.id}" value="1" min="1">
 
@@ -70,33 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
     `;
 
-    // Drink price update logic
-    function updateDrinkTotalPrice(drinkId) {
-      const basePrice = menu.drinks.find(d => d.id === drinkId).price;
-      const sizeSelect = document.getElementById(`size-${drinkId}`);
-      const quantityInput = document.getElementById(`drink-quantity-${drinkId}`);
-
-      let newPrice = basePrice;
-      if (sizeSelect.value === "small") newPrice -= 0.50;
-      else if (sizeSelect.value === "large") newPrice += 1.00;
-
-      const quantity = Math.max(1, parseInt(quantityInput.value, 10) || 1);
-      const totalPrice = newPrice * quantity;
-
-      document.getElementById(`drink-price-${drinkId}`).textContent = basePrice.toFixed(2); // Keep base price the same
-      document.getElementById(`total-drink-price-${drinkId}`).textContent = totalPrice.toFixed(2);
-    }
-
-    // Update total price for drinks when size or quantity changes
-    document.querySelectorAll(".size-select").forEach(select => {
-      select.addEventListener("change", function () {
-        updateDrinkTotalPrice(this.dataset.id);
-      });
-    });
-
+    // Update total price for drinks when quantity changes
     document.querySelectorAll(".drink-quantity-input").forEach(input => {
       input.addEventListener("input", function () {
-        updateDrinkTotalPrice(this.dataset.id);
+        const drinkId = this.dataset.id;
+        const basePrice = menu.drinks.find(d => d.id === drinkId).price;
+        const quantity = Math.max(1, parseInt(this.value, 10) || 1);
+        document.getElementById(`total-drink-price-${drinkId}`).textContent = (basePrice * quantity).toFixed(2);
       });
     });
 
@@ -116,20 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const productId = this.dataset.id;
         const productType = this.dataset.type;
     
-        let selectedProduct, totalPrice, quantity, size = "Medium"; // Default size
-    
+        let selectedProduct, totalPrice, quantity;
+
         if (productType === "drink") {
           selectedProduct = menu.drinks.find(d => d.id === productId);
-          const sizeSelect = document.getElementById(`size-${productId}`);
-          size = sizeSelect.value.charAt(0).toUpperCase() + sizeSelect.value.slice(1); // Capitalize first letter
           quantity = parseInt(document.getElementById(`drink-quantity-${productId}`).value, 10);
-    
-          // Calculate price based on size
-          let price = selectedProduct.price;
-          if (size === "Small") price -= 0.50;
-          else if (size === "Large") price += 1.00;
-    
-          totalPrice = price * quantity;
+          totalPrice = selectedProduct.price * quantity;
         } else {
           selectedProduct = menu.foods.find(f => f.id === productId);
           quantity = parseInt(document.getElementById(`quantity-${productId}`).value, 10);
@@ -137,8 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     
         const existingItem = cart.find(item => 
-          item.productId === selectedProduct.id && 
-          (productType === "food" || item.size === size) // Check size only for drinks
+          item.productId === selectedProduct.id
         );
     
         if (existingItem) {
@@ -151,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
             name: selectedProduct.name,
             price: totalPrice / quantity, // Store the correct price per item
             image: selectedProduct.image,
-            size: size,
             quantity: quantity,
             totalPrice: totalPrice
           });
