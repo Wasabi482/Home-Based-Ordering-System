@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="Images/CafeNortelogo.webp">
+
+  <link rel="stylesheet" href="../styles/cart.css">
+  <title>Cafe Norte</title>
+</head>
+<body>
+
+  <div class="container mt-5">
+    <!-- Order Summary Section -->
+    <div class="items-card summary">
+      <h3>Order Summary</h3>
+      <div id="order-summary">
+        <!-- This will dynamically display order details like items and total -->
+      </div>
+
+      <p>Subtotal: $<span id="subtotal">0.00</span></p>
+      <p>Delivery Fee: $<span id="deliveryFee">5.00</span></p>
+      <p>Total: $<span id="totalAmount">0.00</span></p>
+
+      <!-- Payment Method Section -->
+      <div class="payment-method mt-3">
+        <h4>Select Payment Method:</h4>
+        <label for="payment-method-cash">
+          <input type="radio" name="payment-method" id="payment-method-cash" value="cash" checked> Cash
+        </label>
+        <label for="payment-method-gcash">
+          <input type="radio" name="payment-method" id="payment-method-gcash" value="gcash"> GCash
+        </label>
+      </div>
+
+      <!-- Amount Input Section -->
+      <div class="amount-input mt-3">
+        <label for="amount-input">Enter Amount:</label>
+        <input type="number" id="amount-input" placeholder="Enter amount in PHP" class="form-control">
+        <p id="gcash-error" style="color: red; display: none;">Please enter the exact amount for GCash payments.</p>
+      </div>
+
+      <!-- Proceed to Order Button -->
+      <button id="proceed-order" class="btn btn-primary mt-3" disabled>Proceed to Order</button>
+    </div>
+  </div>
+
+  <!-- Script Includes -->
+  <script src="../Data/pendings-orders.js"></script>
+  <script src="../Data/cart.js"></script> <!-- Ensure correct path -->
+  <script src="../Scripts/checkout.js"></script> <!-- Ensure correct path -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
