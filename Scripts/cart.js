@@ -126,7 +126,7 @@ function proceedWithOrder() {
 
   // Redirect to a confirmation page (or show a success message)
   alert("Order placed successfully! You will be redirected.");
-  window.location.href = "../Pages/order-confirmation.html"; // Redirect to a confirmation page
+  window.location.href = "../index.html"; // Redirect to a confirmation page
 }
 
 // Event listener for the "Proceed with Order" button
